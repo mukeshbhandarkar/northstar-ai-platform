@@ -196,11 +196,6 @@
         "tenant_id": "acmepay",
         "document_id": "RB-002",
         "source_version": 1
-      },
-      {
-        "tenant_id": "acmepay",
-        "document_id": "ARCH-001",
-        "source_version": 1
       }
     ],
     "acceptable_supporting_evidence": [
@@ -218,14 +213,19 @@
         "tenant_id": "acmepay",
         "document_id": "INC-082",
         "source_version": 1
-      }
-    ],
-    "known_distractors": [
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "ARCH-001",
+        "source_version": 1
+      },
       {
         "tenant_id": "acmepay",
         "document_id": "RB-003",
         "source_version": 1
-      },
+      }
+    ],
+    "known_distractors": [
       {
         "tenant_id": "betashop",
         "document_id": "RB-001",
@@ -276,7 +276,7 @@
         "source_version": 1
       }
     ],
-    "expected_conclusion": "No supporting pool-exhaustion evidence for this ticket: the recorded result was issuer decline 05 after a completed provider response, before the regional release. Avoid conflating this single-shopper failure with the later AcmePay escalation.",
+    "expected_conclusion": "No supporting pool-exhaustion evidence for this ticket: the recorded result was issuer decline 05 after a completed provider response. This ticket does not establish a wider checkout outage.",
     "abstain": false
   },
   {
@@ -288,16 +288,6 @@
       {
         "tenant_id": "betashop",
         "document_id": "INC-071",
-        "source_version": 1
-      },
-      {
-        "tenant_id": "betashop",
-        "document_id": "DEP-470",
-        "source_version": 1
-      },
-      {
-        "tenant_id": "betashop",
-        "document_id": "PR-1842",
         "source_version": 1
       }
     ],
@@ -315,6 +305,16 @@
       {
         "tenant_id": "betashop",
         "document_id": "ARCH-001",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "DEP-470",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "PR-1842",
         "source_version": 1
       }
     ],
@@ -340,7 +340,7 @@
         "source_version": 1
       }
     ],
-    "expected_conclusion": "BetaShop INC-071 records exhaustion after its own ceiling reduction from 24 to 4 in checkout-service v3.2, linked to BetaShop PR-1842 and DEP-470. Restoration to 24 cleared its incident. AcmePay records with colliding IDs are not evidence.",
+    "expected_conclusion": "BetaShop INC-071 records pool exhaustion after its ceiling reduction from 24 to 4. Restoration to 24 cleared its incident. Deployment and PR records may additionally establish the checkout-service v3.2 release association; release attribution is not required to answer the incident-mechanism question.",
     "abstain": false
   },
   {

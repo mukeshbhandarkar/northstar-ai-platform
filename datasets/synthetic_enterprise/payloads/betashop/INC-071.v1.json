@@ -7,5 +7,5 @@
   "updated_at": "2026-09-11T17:00:00Z",
   "document_type": "incident",
   "title": "INC-071: BetaShop payment connection pool exhaustion",
-  "body": "Closed BetaShop incident in us-east-1, September 11. checkout-service payment timeout followed a ceiling reduction from 24 to 4. Pending acquisitions rose while payment-service completed dispatched work. Restoring 24 cleared the errors. This historical BetaShop finding is not evidence about another tenant."
+  "body": "Closed BetaShop incident in us-east-1, September 11. checkout-service payment timeout followed a ceiling reduction from 24 to 4. Pending acquisitions rose while payment-service completed dispatched work. Restoring 24 cleared the errors."
 }

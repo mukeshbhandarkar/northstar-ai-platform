@@ -7,5 +7,5 @@
   "updated_at": "2026-09-17T13:20:00Z",
   "document_type": "support_ticket",
   "title": "SUP-302: payment rejected by card issuer",
-  "body": "One shopper reported payment failure at 13:18 UTC, eu-west-1. Support confirmed a completed provider response with issuer decline code 05 and no retry recommendation. No acquisition timeout was reported. Ask the shopper to contact the issuer or use another card. This predates the ap-south-1 checkout release."
+  "body": "One shopper reported payment failure at 13:18 UTC, eu-west-1. Support confirmed a completed provider response with issuer decline code 05 and no retry recommendation. No acquisition timeout was reported. Ask the shopper to contact the issuer or use another card."
 }

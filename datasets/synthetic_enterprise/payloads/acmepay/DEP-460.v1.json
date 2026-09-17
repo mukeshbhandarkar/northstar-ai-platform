@@ -7,5 +7,5 @@
   "updated_at": "2026-09-16T09:00:00Z",
   "document_type": "deployment",
   "title": "DEP-460: checkout-api v4.6.9 receipt patch",
-  "body": "2026-09-16 09:00 UTC: checkout-api v4.6.9 deployed to ap-south-1 with PR-1830. Receipt-label patch only. The release manifest leaves the payment-client pool ceiling at 48 per worker. No checkout payment failure escalation was associated with this rollout in the support handoff."
+  "body": "2026-09-16 09:00 UTC: checkout-api v4.6.9 deployed to ap-south-1 with PR-1830. Receipt-label patch only. The release manifest leaves the payment-client pool ceiling at 48 per worker."
 }

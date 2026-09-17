@@ -7,5 +7,5 @@
   "updated_at": "2026-09-16T12:00:00Z",
   "document_type": "pull_request",
   "title": "PR-771: provider timeout diagnostic labels",
-  "body": "Merged into provider-adapter v2.9. Adds an issuer-route label to timeout diagnostics; response deadline and retry behavior are unchanged. Not part of checkout-api v4.7. No ap-south-1 deployment scheduled on September 17 before 14:07 UTC. Similar timeout terminology does not imply a shared change."
+  "body": "Merged into provider-adapter v2.9. Adds an issuer-route label to timeout diagnostics; response deadline and retry behavior are unchanged. Rollout approval is pending."
 }

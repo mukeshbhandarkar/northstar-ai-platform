@@ -7,5 +7,5 @@
   "updated_at": "2026-08-10T09:00:00Z",
   "document_type": "runbook",
   "title": "Checkout-service payment timeout runbook",
-  "body": "BetaShop on-call: checkout-service calls payment-service through a connection pool. For payment timeout, first distinguish local acquisition from an upstream response deadline. Restore pool settings only after checking payment-service capacity and change approval. This runbook covers BetaShop services only."
+  "body": "BetaShop on-call: checkout-service calls payment-service through a connection pool. For payment timeout, first distinguish local acquisition from an upstream response deadline. Restore pool settings only after checking payment-service capacity and change approval."
 }

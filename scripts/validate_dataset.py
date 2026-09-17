@@ -72,7 +72,7 @@ def digest(path):
 
 def validate(root):
     manifest = load(root / 'manifest.json')
-    require(manifest['dataset_version'] == 'north-002-v1' and
+    require(manifest['dataset_version'] == 'north-002-v2' and
             manifest['schema_version'] == 1, 'Unsupported fixture version')
     require(type(manifest['seed']) is int, 'Missing deterministic seed')
     cutoff = timestamp(manifest['snapshot_as_of'])
@@ -134,7 +134,8 @@ def validate(root):
     # Inspect declared fixture relationships, without materializing document state.
     scenarios = manifest['event_scenarios']
     required = {'create', 'update', 'exact_duplicate', 'stale_replay', 'delete',
-                'duplicate_delete', 'stale_after_delete', 'restore'}
+                'duplicate_delete', 'stale_after_delete', 'restore',
+                'unseen_stale', 'unseen_stale_after_delete'}
     require(set(scenarios) == required, 'Missing edge-case categories')
     for name, position in scenarios.items():
         require(type(position) is int and 1 <= position <= len(events), 'Invalid scenario position')
@@ -149,10 +150,17 @@ def validate(root):
             require(not previous and current['event_type'] == 'upsert', 'Invalid create')
         else:
             require(latest is not None, f'{name}: no prior version')
-            if name in {'stale_replay', 'stale_after_delete'}:
+            if name in {'stale_replay', 'stale_after_delete',
+                        'unseen_stale', 'unseen_stale_after_delete'}:
                 require(current['source_version'] < latest['source_version'], 'Not stale')
-                if name == 'stale_after_delete':
+                if name in {'unseen_stale', 'unseen_stale_after_delete'}:
+                    require(all(e['event_id'] != current['event_id'] for e in prefix),
+                            f'{name}: stale coverage requires an unseen event ID')
+                    require(current['event_type'] == 'upsert', 'Stale probe must be an upsert')
+                if name in {'stale_after_delete', 'unseen_stale_after_delete'}:
                     require(latest['event_type'] == 'delete', 'No preceding tombstone')
+                if name == 'unseen_stale':
+                    require(latest['event_type'] == 'upsert', 'No newer visible document')
             else:
                 require(current['source_version'] > latest['source_version'], 'Not a newer version')
                 require(current['event_type'] == ('delete' if name == 'delete' else 'upsert'),

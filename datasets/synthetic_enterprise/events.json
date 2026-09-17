@@ -30,7 +30,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-08-12T09:00:00Z",
     "payload_ref": "payloads/acmepay/RB-003.v1.json",
-    "checksum": "fa1b1958eb1e522c378d94ca2fb9e4a2ed150eef513f88516575e81f27f3b5f5"
+    "checksum": "64d11e2b662c9e7cfe9da9060a296a45545cf47540200c671700276d573e3cd5"
   },
   {
     "event_id": "evt-004",
@@ -63,7 +63,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-08-17T09:00:00Z",
     "payload_ref": "payloads/acmepay/ARCH-003.v1.json",
-    "checksum": "1453f5423413285046601329ec0b32fa1945046349177cc05f9ad8f5c71c8f08"
+    "checksum": "e631c46fc4ef435e685095fc74ee1ce1f88230a180313580af2832f7df702085"
   },
   {
     "event_id": "evt-007",
@@ -74,7 +74,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-07-12T18:00:00Z",
     "payload_ref": "payloads/acmepay/INC-071.v1.json",
-    "checksum": "6cd8d520880e89d1deac382ec27a6424f9df35901581c32b2fba6ba1f095b0ee"
+    "checksum": "3c5b425f3ba575c42466fb29af62b7aa9fc94e8d43aa01f89ea47f3a67951099"
   },
   {
     "event_id": "evt-008",
@@ -85,7 +85,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-08-04T12:00:00Z",
     "payload_ref": "payloads/acmepay/INC-082.v1.json",
-    "checksum": "190abc1a48dc1a78745fcab9538570bf37b2387814d4281a553f8939ec622fc2"
+    "checksum": "0e7b2e407b684ba697138bec456dffbfdf895e1301df8b628f8afd64deadc071"
   },
   {
     "event_id": "evt-009",
@@ -118,7 +118,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-15T12:00:00Z",
     "payload_ref": "payloads/acmepay/PR-1830.v1.json",
-    "checksum": "7692f8ae18d0b58f47682df221d5c0d120f5a5fa86b084cc24895216303a0fc0"
+    "checksum": "4ec3a685879a06595a707473f2b7c6c498c958e1f89d80daa1017bd2e4bdc8f0"
   },
   {
     "event_id": "evt-012",
@@ -129,7 +129,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-16T12:00:00Z",
     "payload_ref": "payloads/acmepay/PR-771.v1.json",
-    "checksum": "6710fad5ee95bee2e8e136a004150470e3ea39c4527908af58752fbf1c668eb7"
+    "checksum": "a8a6d03d58bbef624e0618c93e0bb93315850e841b2782607124806486416ff2"
   },
   {
     "event_id": "evt-013",
@@ -140,7 +140,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-17T14:06:00Z",
     "payload_ref": "payloads/acmepay/SUP-301.v1.json",
-    "checksum": "cf771420697f50867659ec75ddb2ba3471298f049100f30a177ecbc7f17e4430"
+    "checksum": "672e5b19496f29c6410d29409738dc33777dc68c6445bd4cbca9a5a2fb2bb912"
   },
   {
     "event_id": "evt-014",
@@ -151,7 +151,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-17T13:20:00Z",
     "payload_ref": "payloads/acmepay/SUP-302.v1.json",
-    "checksum": "81deb86cc91553ef1a37e3310d23d5567a49752fb506bf261d340c3d06f430f3"
+    "checksum": "f54e76b5a426e5ff6eed8b022a5198e81c6c9869458eeb115eb31dc2d7e2a6ed"
   },
   {
     "event_id": "evt-015",
@@ -184,7 +184,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-16T09:00:00Z",
     "payload_ref": "payloads/acmepay/DEP-460.v1.json",
-    "checksum": "fc714e42fdbd32f69aaea43ea1e3e8e666ff701dc9ac92f03247b119d3ae4549"
+    "checksum": "8e5d95a9ae26188a04371e1bacf1a9549a882fec8c34dbb15756ec9e1661a3fd"
   },
   {
     "event_id": "evt-018",
@@ -195,7 +195,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-17T08:00:00Z",
     "payload_ref": "payloads/acmepay/DEP-201.v1.json",
-    "checksum": "3324e73e5d1172abc18594b762514c1b7b6331bef1f0f30acd27590484a9d2c8"
+    "checksum": "53b4b5b2279a8e45ef4c668ee4bdfcb03e54c58612d3e2b8795cf349b8cd79bd"
   },
   {
     "event_id": "evt-019",
@@ -206,7 +206,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-08-10T09:00:00Z",
     "payload_ref": "payloads/betashop/RB-001.v1.json",
-    "checksum": "34bfa17b912bf874460ae3f21e11f05c334f3da0d9f8757814633ac2361e232a"
+    "checksum": "5163be0149ba76783de249f3158e5f8bdd305a7c272a739e99f67dbd2abb2d4b"
   },
   {
     "event_id": "evt-020",
@@ -217,7 +217,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-08-15T09:00:00Z",
     "payload_ref": "payloads/betashop/ARCH-001.v1.json",
-    "checksum": "3afb4d9b99721138aa04332c6eebe08109904f40d8a753ef27970e684655c15c"
+    "checksum": "9a3b9d0ad41b0455c22a66fddebc88b2107f055c57ca88b9e4947a1d60f8dda8"
   },
   {
     "event_id": "evt-021",
@@ -228,7 +228,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-11T17:00:00Z",
     "payload_ref": "payloads/betashop/INC-071.v1.json",
-    "checksum": "18bdaad7fd217234af5438d5762da3c7af0814db9c1e47ecca488e172cdd441c"
+    "checksum": "6483edc67cca5a850e7716146950b9e1d841e82fb17cf436931aa3f333f9d731"
   },
   {
     "event_id": "evt-022",
@@ -239,7 +239,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-10T12:00:00Z",
     "payload_ref": "payloads/betashop/PR-1842.v1.json",
-    "checksum": "43d9d9cdbffa1a2b86294a692d611df9f86ff356ad8ff43e5df1baa1795d5678"
+    "checksum": "1bc67624726f59bc0157a94096faf0c8d859b9866eefc4f83452bb1b84e610da"
   },
   {
     "event_id": "evt-023",
@@ -250,7 +250,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-11T14:06:00Z",
     "payload_ref": "payloads/betashop/SUP-301.v1.json",
-    "checksum": "aeff7a75c1b784575e995435603d1df2dd57aa9b9cbe814b613745afe5006e73"
+    "checksum": "6f4a152819802c2f9bc454b6fb62d4b4097b214a5ba5685a10e964b4e973ade6"
   },
   {
     "event_id": "evt-024",
@@ -261,7 +261,7 @@
     "event_type": "upsert",
     "occurred_at": "2026-09-11T14:03:00Z",
     "payload_ref": "payloads/betashop/DEP-470.v1.json",
-    "checksum": "2ab02018d3456313c789c15e4a6d7511980c46baccd238a76e569e4158e6c768"
+    "checksum": "d9089068404a9d68d5d79c6ad1491e504b8b72bad377253d907dd54ee55590a8"
   },
   {
     "event_id": "evt-025",
@@ -297,6 +297,17 @@
     "checksum": "a49e24d28b63e4bc9a321f4e3bf07b3f9d5c5bc41756cd112ff54d08bc1bdc99"
   },
   {
+    "event_id": "evt-028",
+    "tenant_id": "acmepay",
+    "source": "support",
+    "document_id": "SUP-303",
+    "source_version": 1,
+    "event_type": "upsert",
+    "occurred_at": "2026-09-10T10:00:00Z",
+    "payload_ref": "payloads/acmepay/SUP-303.v1.json",
+    "checksum": "a49e24d28b63e4bc9a321f4e3bf07b3f9d5c5bc41756cd112ff54d08bc1bdc99"
+  },
+  {
     "event_id": "evt-026",
     "tenant_id": "acmepay",
     "source": "support",
@@ -320,6 +331,17 @@
   },
   {
     "event_id": "evt-025",
+    "tenant_id": "acmepay",
+    "source": "support",
+    "document_id": "SUP-303",
+    "source_version": 2,
+    "event_type": "upsert",
+    "occurred_at": "2026-09-10T10:10:00Z",
+    "payload_ref": "payloads/acmepay/SUP-303.v2.json",
+    "checksum": "e1af4693f3f19e1d30f73dd11c71adb72e5f4cd43ab57b26f8cd02ea73e546d6"
+  },
+  {
+    "event_id": "evt-029",
     "tenant_id": "acmepay",
     "source": "support",
     "document_id": "SUP-303",

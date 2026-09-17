@@ -7,5 +7,5 @@
   "updated_at": "2026-09-17T14:06:00Z",
   "document_type": "support_ticket",
   "title": "SUP-301: checkout failures after lunchtime release",
-  "body": "Opened 14:06 UTC by merchant support, ap-south-1. Several merchants report checkout payment failures beginning around 14:04. On-call handoff at 14:05 describes increased payment-client connection acquisition wait and acquire-timeout messages from checkout-api; this is an authored observation, not an attached metric series or raw log. The current payment-api handoff says dispatched authorizations are completing normally. Impact count and live telemetry remain unverified."
+  "body": "Opened 14:06 UTC by merchant support, ap-south-1. Several merchants report checkout payment failures beginning around 14:04. On-call handoff at 14:05 describes increased payment-client connection acquisition wait and acquire-timeout messages from checkout-api. The current payment-api handoff says dispatched authorizations are completing normally. Impact count and live telemetry remain unverified."
 }

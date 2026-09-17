@@ -7,5 +7,5 @@
   "updated_at": "2026-07-12T18:00:00Z",
   "document_type": "incident",
   "title": "INC-071: checkout queueing during sale",
-  "body": "Closed historical incident, 2026-07-12 16:20–16:48 UTC, ap-south-1. checkout-api reported payment-client acquisition timeouts while payment-api completed dispatched calls normally. The incident team found pending acquisitions against a worker-local ceiling of 12 during the sale. Restoring the previous ceiling of 48 removed the queue and errors subsided. Cause recorded for this incident: outbound pool exhaustion. This report concerns the July release, not the September deployment."
+  "body": "Closed historical incident, 2026-07-12 16:20–16:48 UTC, ap-south-1. checkout-api reported payment-client acquisition timeouts while payment-api completed dispatched calls normally. The incident team found pending acquisitions against a worker-local ceiling of 12 during the sale. Restoring the previous ceiling of 48 removed the queue and errors subsided. Cause recorded for this incident: outbound pool exhaustion."
 }

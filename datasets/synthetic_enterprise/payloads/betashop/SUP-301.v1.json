@@ -7,5 +7,5 @@
   "updated_at": "2026-09-11T14:06:00Z",
   "document_type": "support_ticket",
   "title": "SUP-301: BetaShop checkout payment timeout",
-  "body": "BetaShop merchant support, September 11 14:06 UTC, us-east-1: checkout-service payment timeout after deployment. Support attached an authored observation of connection-pool waiters; no raw logs or metrics are in this record. Follow-up is recorded in BetaShop INC-071."
+  "body": "BetaShop merchant support, September 11 14:06 UTC, us-east-1: checkout-service payment timeout after deployment. On-call reports pending connection acquisitions. Escalated to the payments team; investigation is ongoing."
 }

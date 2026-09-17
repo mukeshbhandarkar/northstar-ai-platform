@@ -7,7 +7,7 @@ NORTH-001 established this contract without generating data. NORTH-002 now suppl
 - `payloads/acmepay/`: 18 document identities; SUP-303 additionally has versions 2 and 4 and a version 3 delete tombstone.
 - `payloads/betashop/`: six document identities, one of each document type. All six IDs intentionally collide with AcmePay IDs; identity always includes the tenant.
 - `manifest.json`: dataset/schema versions, seed, complete fixture-file SHA-256 inventory, snapshot payload list, and one-based event scenario positions.
-- `events.json`: ordered array of 31 delivery envelopes representing 27 distinct events. Payload references are relative to this directory.
+- `events.json`: ordered array of 33 delivery envelopes representing 29 distinct events. Payload references are relative to this directory.
 - `ground_truth.json`: eight investigation cases, kept separate from source documents and never supplied as retrieval corpus content.
 
 There are 24 logical documents (four per category), 26 complete document-version payloads, and one tombstone. Do not count versions or the tombstone as additional logical documents. The `snapshot_payloads` list is the authoritative corpus selection for the labeled snapshot; recursively loading every payload would incorrectly include superseded versions and a tombstone.
@@ -18,9 +18,15 @@ The snapshot is fixed at **2026-09-17T14:07:00Z**. “Today” in a case refers 
 
 The fixtures are hand-authored and static; seed `0` is a recorded reproducibility marker and no random sampling is performed. Reproduce them from the repository revision and verify the manifest, rather than generating new prose. Enterprise design assumptions do not describe this dataset's measured scale. No performance benchmark has been run.
 
+Dataset revision `north-002-v2` corrects authored fixture content and labels and adds two event identities. Document identities, source versions, and timestamps are unchanged. Checksums are regenerated for this revision. Reproduce each revision from its Git commit and use a fresh fixture state; these authoring corrections are not source updates to replay into state created from `north-002-v1`. Payloads remain immutable within each revision.
+
+### Accepted limitations
+
+This small corpus has only two tenants, mostly AcmePay cases, and one abstention case. Explicit document IDs make some questions easy. It supports deterministic engineering regression tests, not claims of representative enterprise retrieval quality.
+
 ### Event sequence and snapshot
 
-Deliveries 1–24 create each tenant/document at version 1. The remaining deliveries exercise AcmePay SUP-303: v2 update (25), exact v2 duplicate (26), stale v1 replay (27), v3 delete (28), duplicate delete (29), stale v2 replay after deletion (30), and legitimate v4 restoration (31). Replayed deliveries preserve the entire envelope, including event ID and original occurrence time.
+Deliveries 1–24 create each tenant/document at version 1. The remaining deliveries exercise AcmePay SUP-303: v2 update (25), exact v2 duplicate (26), stale v1 replay (27), unseen stale v1 event (28), v3 delete (29), duplicate delete (30), stale v2 replay after deletion (31), unseen stale v2 event after deletion (32), and legitimate v4 restoration (33). Replayed deliveries preserve the entire envelope, including event ID and original occurrence time. The unseen stale events use new IDs `evt-028` and `evt-029` while retaining the old payload version and original occurrence time. Delivery 28 must leave v2 visible; delivery 32 must leave the v3 tombstone authoritative. New event identity does not imply a new document version. The validator requires both probes to have IDs absent from the preceding deliveries, so duplicate detection alone cannot satisfy this coverage.
 
 Array order is fixture delivery order; it is deliberately not global occurrence-time order. Events across independent documents may arrive out of order. The snapshot selects the highest accepted version for each identity after the full fixture, including restored SUP-303 v4. Check absence immediately after deletion and stale replay in future ingestion tests, before the legitimate restoration. This file is a fixture, not an ingestion implementation.
 
@@ -30,7 +36,7 @@ Each case contains `case_id`, `tenant_id`, `as_of`, `question`, `expected_eviden
 
 `expected_evidence` identifies required evidence; `acceptable_supporting_evidence` lists optional useful context. Neither list may cross the case's tenant boundary or cite a superseded snapshot version. `known_distractors` is a non-exhaustive list of misleading matches and may intentionally cite another tenant or an older version; it never authorizes using that content as evidence. An abstention case has no positive evidence.
 
-Cases cover the primary incident (five required sources), historical lookup, deployment/change analysis, safe diagnostics, issuer-decline discrimination, BetaShop isolation, an unsupported region/time question, and the corrected/restored support note. Case labels do not define a new ranking metric or claim that retrieval has succeeded.
+Cases cover the primary incident (five required sources), historical lookup, deployment/change analysis, safe diagnostics, issuer-decline discrimination, BetaShop isolation, an unsupported region/time question, and the corrected/restored support note. ACME-004 requires the two diagnostic runbooks; architecture documents and fraud-path guidance are optional context. BETA-001 requires the incident report; deployment and PR records optionally substantiate release attribution. Supporting records are not all required, and an answer must not assert optional release details without evidence. Case labels do not define a new ranking metric or claim that retrieval has succeeded.
 
 ### Validation
 

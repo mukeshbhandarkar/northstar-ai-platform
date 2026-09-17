@@ -7,5 +7,5 @@
   "updated_at": "2026-08-12T09:00:00Z",
   "document_type": "runbook",
   "title": "Fraud decision latency triage",
-  "body": "Owner: fraud-service. Trace the fraud decision before payment authorization. Determine whether checkout-api is waiting for a fraud decision or acquiring a payment-api connection. Check feature-refresh activity and fraud deadline errors. INC-090 describes refresh contention. Never bypass fraud checks as an unreviewed mitigation."
+  "body": "Owner: fraud-service. Trace the fraud decision before payment authorization. Determine whether checkout-api is waiting for a fraud decision or acquiring a payment-api connection. Check feature-refresh activity and fraud deadline errors. Never bypass fraud checks as an unreviewed mitigation."
 }

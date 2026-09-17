@@ -7,5 +7,5 @@
   "updated_at": "2026-09-11T14:03:00Z",
   "document_type": "deployment",
   "title": "DEP-470: BetaShop checkout-service v3.2",
-  "body": "BetaShop deployment at 2026-09-11 14:03 UTC, us-east-1: checkout-service v3.2 includes BetaShop PR-1842. payment-service unchanged. Release and service identifiers belong exclusively to BetaShop, despite overlapping checkout/payment terminology."
+  "body": "BetaShop deployment at 2026-09-11 14:03 UTC, us-east-1: checkout-service v3.2 includes BetaShop PR-1842. payment-service unchanged."
 }

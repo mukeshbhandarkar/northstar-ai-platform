@@ -24,7 +24,7 @@ Use 24 logical documents: 18 AcmePay and six BetaShop, with four documents in ea
 
 The primary case at 14:07 requires a deployment, PR, historical pool-exhaustion incident, diagnostic runbook, and support ticket. Its conclusion is a supported hypothesis, not proof of causality. Provider-response failures, fraud-refresh latency, a receipt-only deployment, and an issuer decline provide realistic distractors. BetaShop has similar vocabulary and six colliding IDs, but its documents are never valid AcmePay evidence.
 
-Use AcmePay SUP-303 for an independent lifecycle example: create v1, correct v2, delete v3, restore v4, with duplicate and stale deliveries. There are 26 complete payload versions, one tombstone, 31 deliveries, and 27 unique event IDs. The final snapshot lists one current version per logical document. Ground truth pins tenant/document/version references to that snapshot; distractors may deliberately reference old versions or another tenant.
+Use AcmePay SUP-303 for an independent lifecycle example: create v1, correct v2, delete v3, restore v4, with duplicate and stale deliveries. There are 26 complete payload versions, one tombstone, 33 deliveries, and 29 unique event IDs. The final snapshot lists one current version per logical document. Ground truth pins tenant/document/version references to that snapshot; distractors may deliberately reference old versions or another tenant.
 
 Eight cases cover the primary incident, historical lookup, deployment change, diagnostics, an issuer-decline distractor, BetaShop isolation, missing evidence/abstention, and a restored support note. Fixed UTC times and static files avoid dependence on the machine clock. Seed 0 records that no random generation is used. See the [dataset layout](../../datasets/synthetic_enterprise/README.md) for exact file and label conventions.
 
@@ -34,7 +34,7 @@ Eight cases cover the primary incident, historical lookup, deployment change, di
 - The primary conclusion requires correlation across multiple documents and is qualified by missing live verification.
 - BetaShop overlaps in terminology and identifiers but never appears in positive AcmePay evidence; the reverse isolation case is also represented.
 - Required metadata, nine-field event envelopes, immutable payload references, and byte-level SHA-256 checksums follow NORTH-001.
-- Fixture delivery order demonstrates create, update, exact duplicate, stale replay, deletion, duplicate deletion, stale replay after deletion, and a strictly newer restoration.
+- Fixture delivery order demonstrates create, update, exact duplicate, stale replay, deletion, duplicate deletion, stale replay after deletion, unseen stale events both before and after deletion, and a strictly newer restoration. The unseen probes must independently exercise version ordering rather than event-ID deduplication.
 - Eight machine-readable cases resolve to existing document versions; an abstention case has no positive evidence.
 - `python scripts/validate_dataset.py` passes without external dependencies. Disposable malformed fixture copies are rejected for checksum, schema/version, timestamp, reference, tenant, and event-category errors.
 - `git diff --check` passes. No unrelated NORTH-001 architecture/requirements or implementation files are changed.

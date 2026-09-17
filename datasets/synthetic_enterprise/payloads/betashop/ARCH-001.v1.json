@@ -7,5 +7,5 @@
   "updated_at": "2026-08-15T09:00:00Z",
   "document_type": "architecture_doc",
   "title": "BetaShop checkout-service connections",
-  "body": "BetaShop checkout-service uses payment-service for authorization in us-east-1. Each worker has a connection pool with ceiling 24. Payment timeout and deployment annotations use BetaShop identifiers. There is no shared service, tenant storage, or change authority with AcmePay."
+  "body": "BetaShop checkout-service uses payment-service for authorization in us-east-1. Each worker has a connection pool with ceiling 24. The payments team owns client connection settings and authorization deadlines."
 }

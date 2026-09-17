@@ -7,5 +7,5 @@
   "updated_at": "2026-08-17T09:00:00Z",
   "document_type": "architecture_doc",
   "title": "Fraud feature refresh path",
-  "body": "fraud-service refreshes merchant features before serving decisions from a local snapshot. Refresh contention can delay decisions without a payment-api request being issued. checkout-api preserves the fraud decision identifier on successful authorization attempts. Feature refresh and payment-client pools have separate owners; similar checkout latency language alone does not establish a common fault."
+  "body": "fraud-service refreshes merchant features before serving decisions from a local snapshot. Refresh contention can delay decisions without a payment-api request being issued. checkout-api preserves the fraud decision identifier on successful authorization attempts. Feature refresh and payment-client pools have separate owners."
 }
