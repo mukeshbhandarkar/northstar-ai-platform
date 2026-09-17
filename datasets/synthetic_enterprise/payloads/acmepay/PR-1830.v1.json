@@ -1,0 +1,11 @@
+{
+  "tenant_id": "acmepay",
+  "document_id": "PR-1830",
+  "source": "git",
+  "source_version": 1,
+  "created_at": "2026-09-15T12:00:00Z",
+  "updated_at": "2026-09-15T12:00:00Z",
+  "document_type": "pull_request",
+  "title": "PR-1830: checkout receipt label correction",
+  "body": "Merged into checkout-api v4.6.9. Corrects the receipt label for a settled payment in the response formatter. No network-client, connection-pool, fraud, or provider timeout changes. Deployment record DEP-460 identifies the release. This patch does not alter authorization execution."
+}

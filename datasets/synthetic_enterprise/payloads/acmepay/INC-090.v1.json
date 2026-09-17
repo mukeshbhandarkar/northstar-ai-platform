@@ -1,0 +1,11 @@
+{
+  "tenant_id": "acmepay",
+  "document_id": "INC-090",
+  "source": "incidents",
+  "source_version": 1,
+  "created_at": "2026-08-22T11:00:00Z",
+  "updated_at": "2026-08-22T11:00:00Z",
+  "document_type": "incident",
+  "title": "INC-090: fraud refresh stalls checkout",
+  "body": "Closed incident, 2026-08-22 09:40–10:05 UTC, ap-south-1. fraud-service feature refresh held a reader lock. Checkout requests timed out before payment authorization began. Payment-api and provider-adapter had no corresponding error increase. Deferring refresh cleared the stall; payment-client pool settings were unchanged. Follow RB-003 to distinguish this path."
+}

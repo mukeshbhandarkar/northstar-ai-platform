@@ -1,0 +1,11 @@
+{
+  "tenant_id": "acmepay",
+  "document_id": "SUP-303",
+  "source": "support",
+  "source_version": 1,
+  "created_at": "2026-09-10T10:00:00Z",
+  "updated_at": "2026-09-10T10:00:00Z",
+  "document_type": "support_ticket",
+  "title": "SUP-303: duplicate checkout receipt notice",
+  "body": "Support housekeeping note: a merchant received two receipt emails for one successful checkout payment. Billing confirmed one authorization. This note is being corrected before archival; it contains no report of payment failure or connection acquisition delay."
+}

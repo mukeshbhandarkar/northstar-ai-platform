@@ -1,0 +1,411 @@
+[
+  {
+    "case_id": "ACME-001",
+    "tenant_id": "acmepay",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "Why are checkout payments failing after today's deployment?",
+    "expected_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-470",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "PR-1842",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-071",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "RB-001",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-301",
+        "source_version": 1
+      }
+    ],
+    "acceptable_supporting_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "ARCH-001",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-460",
+        "source_version": 1
+      }
+    ],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-082",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-090",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-302",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-201",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "INC-071",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "PR-1842",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "DEP-470",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "Evidence supports checkout-api v4.7 at 14:03 UTC in ap-south-1 as the relevant change window. Its PR reduced the per-worker payment-client ceiling from 48 to 8 with workers and acquisition timeout unchanged. Reported wait/acquire-timeout symptoms and the historical AcmePay pool-exhaustion incident make reduced effective connection capacity under load the likely cause in this synthetic scenario. RB-001 supplies checks and reviewed rollback guidance. Confirm current concurrency, pending acquisitions and downstream health through dedicated tools before treating causality or remediation as proven.",
+    "abstain": false
+  },
+  {
+    "case_id": "ACME-002",
+    "tenant_id": "acmepay",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "Which prior AcmePay incident involved checkout acquisition timeouts while dispatched payment calls remained normal?",
+    "expected_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-071",
+        "source_version": 1
+      }
+    ],
+    "acceptable_supporting_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "RB-001",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "ARCH-001",
+        "source_version": 1
+      }
+    ],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-082",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-090",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "INC-071",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "AcmePay INC-071 on July 12 recorded worker-local outbound pool exhaustion; restoring the previous ceiling removed the queue. It is an analogy, not verification of the current incident.",
+    "abstain": false
+  },
+  {
+    "case_id": "ACME-003",
+    "tenant_id": "acmepay",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "What changed in the September 17 14:03 ap-south-1 checkout-api deployment?",
+    "expected_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-470",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "PR-1842",
+        "source_version": 1
+      }
+    ],
+    "acceptable_supporting_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-460",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "ARCH-001",
+        "source_version": 1
+      }
+    ],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "PR-1830",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "PR-771",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-201",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "DEP-470",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "DEP-470 deployed v4.7 with PR-1842, reducing max_connections from 48 to 8 per worker while retaining four workers and acquire_timeout_ms 250. No simultaneous downstream release is recorded; this identifies a change, not proven impact.",
+    "abstain": false
+  },
+  {
+    "case_id": "ACME-004",
+    "tenant_id": "acmepay",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "How should on-call safely distinguish checkout payment-client acquisition delays from provider timeouts?",
+    "expected_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "RB-001",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "RB-002",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "ARCH-001",
+        "source_version": 1
+      }
+    ],
+    "acceptable_supporting_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "ARCH-002",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-071",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-082",
+        "source_version": 1
+      }
+    ],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "RB-003",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "RB-001",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "Check whether authorization was dispatched, compare active/pending connections and the configured ceiling with the healthy release, and inspect provider response behavior using dedicated tools. Seek approval for rollback; do not blindly increase limits or retry non-idempotent authorizations.",
+    "abstain": false
+  },
+  {
+    "case_id": "ACME-005",
+    "tenant_id": "acmepay",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "Did the eu-west-1 shopper failure at 13:18 on September 17 indicate connection-pool exhaustion?",
+    "expected_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-302",
+        "source_version": 1
+      }
+    ],
+    "acceptable_supporting_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "ARCH-002",
+        "source_version": 1
+      }
+    ],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-301",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-071",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "PR-1842",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "INC-071",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "No supporting pool-exhaustion evidence for this ticket: the recorded result was issuer decline 05 after a completed provider response, before the regional release. Avoid conflating this single-shopper failure with the later AcmePay escalation.",
+    "abstain": false
+  },
+  {
+    "case_id": "BETA-001",
+    "tenant_id": "betashop",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "What does our September 11 checkout-service payment timeout incident say about the connection pool?",
+    "expected_evidence": [
+      {
+        "tenant_id": "betashop",
+        "document_id": "INC-071",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "DEP-470",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "PR-1842",
+        "source_version": 1
+      }
+    ],
+    "acceptable_supporting_evidence": [
+      {
+        "tenant_id": "betashop",
+        "document_id": "SUP-301",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "RB-001",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "ARCH-001",
+        "source_version": 1
+      }
+    ],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-071",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-470",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "PR-1842",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-301",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "BetaShop INC-071 records exhaustion after its own ceiling reduction from 24 to 4 in checkout-service v3.2, linked to BetaShop PR-1842 and DEP-470. Restoration to 24 cleared its incident. AcmePay records with colliding IDs are not evidence.",
+    "abstain": false
+  },
+  {
+    "case_id": "ACME-006",
+    "tenant_id": "acmepay",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "Why did AcmePay checkout-api fail in us-west-2 at 03:00 on September 17?",
+    "expected_evidence": [],
+    "acceptable_supporting_evidence": [],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "DEP-470",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-301",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "INC-082",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "INC-071",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "Abstain: no AcmePay source describes the requested region and time. Similar symptoms elsewhere do not establish an incident or cause.",
+    "abstain": true
+  },
+  {
+    "case_id": "ACME-007",
+    "tenant_id": "acmepay",
+    "as_of": "2026-09-17T14:07:00Z",
+    "question": "What is the current corrected status of the duplicate receipt report SUP-303?",
+    "expected_evidence": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-303",
+        "source_version": 4
+      }
+    ],
+    "acceptable_supporting_evidence": [],
+    "known_distractors": [
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-303",
+        "source_version": 1
+      },
+      {
+        "tenant_id": "acmepay",
+        "document_id": "SUP-303",
+        "source_version": 2
+      },
+      {
+        "tenant_id": "betashop",
+        "document_id": "SUP-301",
+        "source_version": 1
+      }
+    ],
+    "expected_conclusion": "The restored v4 note attributes duplicate email to a merchant forwarder with one successful authorization. Earlier notes are superseded; this is not a payment-failure incident.",
+    "abstain": false
+  }
+]

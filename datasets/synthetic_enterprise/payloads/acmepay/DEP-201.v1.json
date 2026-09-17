@@ -1,0 +1,11 @@
+{
+  "tenant_id": "acmepay",
+  "document_id": "DEP-201",
+  "source": "releases",
+  "source_version": 1,
+  "created_at": "2026-09-17T08:00:00Z",
+  "updated_at": "2026-09-17T08:00:00Z",
+  "document_type": "deployment",
+  "title": "DEP-201: fraud-service v2.1 rollout",
+  "body": "2026-09-17 08:00 UTC: fraud-service v2.1 deployed to eu-west-1. Change updates an administrative health response; feature-refresh behavior unchanged. checkout-api and payment-api were not deployed by this operation. This is a different region and change window from DEP-470."
+}

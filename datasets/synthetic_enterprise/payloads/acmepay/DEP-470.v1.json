@@ -1,0 +1,11 @@
+{
+  "tenant_id": "acmepay",
+  "document_id": "DEP-470",
+  "source": "releases",
+  "source_version": 1,
+  "created_at": "2026-09-17T14:03:00Z",
+  "updated_at": "2026-09-17T14:03:00Z",
+  "document_type": "deployment",
+  "title": "DEP-470: checkout-api v4.7 regional rollout",
+  "body": "2026-09-17 14:03 UTC: checkout-api v4.7 rolled out to ap-south-1, replacing v4.6.9. Release manifest includes PR-1842. Four workers per replica retained. Startup checks passed; this record does not establish behavior under live load. payment-api, fraud-service, and provider-adapter were not deployed in this window."
+}
