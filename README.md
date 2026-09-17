@@ -14,12 +14,25 @@ requirement → naive baseline → production symptom → instrumentation → ev
 
 Here, a production symptom means a simulated operational failure. Findings must include reproducible evidence and the limitations of the simulation.
 
-## Current phase: NORTH-001
+## Current phase: NORTH-003
 
-This phase establishes planning documents, contracts, and an intentionally naive v0 design. There is no runnable application or measured benchmark result yet.
+NORTH-001 established the planning baseline; NORTH-002 supplied the deterministic corpus. NORTH-003 implements local event validation and SQLite materialized document state. There is no retrieval, inference, or measured performance benchmark result.
+
+With Python 3.12 active, run:
+
+```bash
+python scripts/validate_dataset.py
+python -m unittest discover -v
+python scripts/replay_events.py --dataset datasets/synthetic_enterprise --db /tmp/northstar-state.db --fresh
+python scripts/replay_events.py --dataset datasets/synthetic_enterprise --db /tmp/northstar-state.db
+```
+
+The replay emits JSON outcomes, final state, and a manifest comparison. `--fresh` explicitly removes the chosen database and its SQLite sidecar files; omit it to resume existing state. Use a dedicated local database with no other process accessing it. No dependencies need installing.
 
 - [Company and customer context](docs/product/company-context.md)
 - [Engineering ticket](docs/requirements/NORTH-001.md)
+- [Dataset ticket](docs/requirements/NORTH-002.md)
+- [Local processor ticket and semantics](docs/requirements/NORTH-003.md)
 - [Initial SLO/SLI targets](docs/requirements/slo-sli.md)
 - [Proposed v0 architecture](docs/architecture/v0-baseline.md)
 - [Synthetic dataset contract](datasets/synthetic_enterprise/README.md)
