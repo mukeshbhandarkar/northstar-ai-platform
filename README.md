@@ -57,8 +57,8 @@ flowchart TB
 
 | # | Lesson | Engineering problem | Status |
 | --- | --- | --- | --- |
-| 01 | Trust the Data Before You Retrieve It | Deletions, stale events, idempotency, tombstones | **CURRENT** |
-| 02 | Build a Retrieval Baseline Before Embeddings | Lexical retrieval, evidence coverage, failure analysis | **NEXT** |
+| 01 | Trust the Data Before You Retrieve It | Deletions, stale events, idempotency, tombstones | **PUBLISHED** |
+| 02 | Build a Retrieval Baseline Before Embeddings | Lexical retrieval, evidence coverage, failure analysis | **CURRENT** |
 | 03 | When Lexical Search Stops Being Enough | Dense retrieval, hybrid search, reranking | PLANNED |
 | 04 | Fresh Data Is a Feature | Event ingestion, indexing lag, freshness SLOs | PLANNED |
 | 05 | Make the Agent Prove Its Answer | Tools, evidence, citations, bounded workflows | PLANNED |
@@ -70,7 +70,7 @@ flowchart TB
 
 ## Current implementation
 
-At commit `66f2107`, the repository contains a Python 3.12 standard-library baseline with:
+The Lesson 01 baseline, frozen at tag [`lesson-01`](https://github.com/mukeshbhandarkar/northstar-ai-platform/tree/lesson-01), contains a Python 3.12 standard-library implementation with:
 
 - SQLite materialized document state keyed by `(tenant_id, document_id)`.
 - Event-envelope, payload-reference, checksum, identity, version, and timestamp validation.
@@ -170,15 +170,23 @@ These are deliberate boundaries. Later components should be introduced only when
 
 ## Roadmap
 
-- **Current:** trustworthy materialized source state.
-- **Next:** deterministic retrieval baseline and evaluation.
+- **Completed:** trustworthy materialized source state (Lesson 01).
+- **Current:** deterministic retrieval baseline and evaluation (Lesson 02).
 - **Later:** hybrid retrieval; freshness and event streaming; bounded agents; model serving; KV/cache experiments; observability and failure recovery.
 
 ## Articles
 
-**Lesson 01 — We Deleted the Document. Our AI System Brought It Back.**
+### Lesson 01 — A New Event Isn't New State
 
-[Article coming soon]
+A new event ID does not guarantee newer source state. Lesson 01 investigates stale-event resurrection, version ordering, tombstones, atomic writes, replay convergence, and the mutation experiment that exposed a weakness in the original test.
+
+**[Read Lesson 01 on Substack →](https://mukeshllm.substack.com/p/a-new-event-isnt-new-state)**
+
+Reproduce the committed Lesson 01 implementation from the frozen [`lesson-01`](https://github.com/mukeshbhandarkar/northstar-ai-platform/tree/lesson-01) tag.
+
+### Lesson 02 — Build a Retrieval Baseline Before Embeddings
+
+**In progress.** Starting from the trustworthy materialized state established in Lesson 01, the next investigation measures how much relevant evidence a deliberately simple lexical retriever can recover before introducing embeddings.
 
 ## Author
 
