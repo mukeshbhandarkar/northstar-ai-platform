@@ -29,20 +29,23 @@ Each change should answer an observed need. Simulated failures produce reproduci
 
 ## The system we're building
 
-This is the long-term direction. Only the synthetic source fixture, local validation/replay path, and SQLite materialized state are implemented today. Dashed components remain future work.
+This is the long-term direction. The synthetic source fixture, local validation/replay path, SQLite materialized state, and deterministic lexical retrieval/evaluation are implemented today. Dashed components remain future work.
 
 ```mermaid
 flowchart TB
     sources["Enterprise Sources<br/>synthetic fixture: implemented"]
     ingest["Ingestion & Validation<br/>local replay: implemented"]
     state["Materialized Knowledge State<br/>SQLite: implemented"]
-    retrieval["Retrieval<br/>future"]
+    retrieval["Lexical Retrieval<br/>implemented"]
     agents["Agent Orchestration<br/>future"]
     serving["Model Serving<br/>future"]
-    cross["Evaluation / Observability / Reliability<br/>future, cross-cutting"]
+    evaluation["Lexical Evaluation<br/>implemented"]
+    cross["Observability / Reliability<br/>future, cross-cutting"]
 
     sources --> ingest --> state
-    state -.-> retrieval -.-> agents -.-> serving
+    state --> retrieval
+    retrieval --> evaluation
+    retrieval -.-> agents -.-> serving
     cross -.-> ingest
     cross -.-> state
     cross -.-> retrieval
@@ -50,7 +53,7 @@ flowchart TB
     cross -.-> serving
 
     classDef future fill:#f7f7f7,stroke:#777,stroke-dasharray:5 5,color:#444;
-    class retrieval,agents,serving,cross future;
+    class agents,serving,cross future;
 ```
 
 ## Engineering lessons
@@ -81,7 +84,7 @@ The Lesson 01 baseline, frozen at tag [`lesson-01`](https://github.com/mukeshbha
 - Tenant-scoped state inspection with tenant predicates in SQL.
 - A deterministic synthetic enterprise fixture, replay tooling, manifest comparison, and standard-library tests.
 
-The fixture has **2 synthetic tenants**, **24 logical document identities**, **33 event deliveries**, and **29 unique event IDs**. The 22-test suite passes against the committed implementation.
+The fixture has **2 synthetic tenants**, **24 logical document identities**, **33 event deliveries**, and **29 unique event IDs**. Lesson 01 has 22 processor tests; NORTH-004 adds 15 retrieval/evaluation tests.
 
 The deterministic replay produces these correctness observations:
 
@@ -137,16 +140,17 @@ python scripts/replay_events.py \
 
 ```text
 .
-├── benchmarks/                     # Future measurement contract
+├── benchmarks/                     # Measurement contract and lexical run artifact
 ├── datasets/
 │   └── synthetic_enterprise/       # Versioned documents, events, labels, manifest
 ├── docs/
 │   ├── architecture/               # Baseline design and decision log
 │   ├── product/                    # Fictional company and customer context
 │   └── requirements/               # Requirements and initial targets
-├── scripts/                        # Dataset validation and event replay
+├── scripts/                        # Validation, replay and retrieval evaluation
 ├── services/
-│   └── processor/                  # Validation, processing, SQLite state
+│   ├── processor/                  # Validation, processing, SQLite state
+│   └── retrieval/                  # Current-state lexical matching
 └── tests/                          # Correctness and failure tests
 ```
 
@@ -156,6 +160,7 @@ python scripts/replay_events.py \
 - [NORTH-001 engineering baseline](docs/requirements/NORTH-001.md)
 - [NORTH-002 synthetic dataset and ground truth](docs/requirements/NORTH-002.md)
 - [NORTH-003 local event processing](docs/requirements/NORTH-003.md)
+- [NORTH-004 lexical retrieval and evaluation](docs/requirements/NORTH-004.md)
 - [Proposed v0 architecture](docs/architecture/v0-baseline.md)
 - [Architecture decision log](docs/architecture/decision-log.md)
 - [Dataset contract and fixture layout](datasets/synthetic_enterprise/README.md)
@@ -164,7 +169,7 @@ python scripts/replay_events.py \
 
 ## Current limitations
 
-This is a local, single-process, CPU-first experiment using SQLite and synthetic tenants/data. It has no retrieval or LLM inference, and no vector database, Kafka, Redis, vLLM, LMCache, or Kubernetes. No production-scale performance benchmark has been run.
+This is a local, single-process, CPU-first experiment using SQLite and synthetic tenants/data. Retrieval uses deterministic title/body token overlap over current tenant-scoped rows. It has no LLM inference, vector database, Kafka, Redis, vLLM, LMCache, or Kubernetes. The eight-case local evaluation does not establish production-scale performance.
 
 These are deliberate boundaries. Later components should be introduced only when a requirement or reproduced failure makes their cost and trade-offs measurable.
 
@@ -186,7 +191,13 @@ Reproduce the committed Lesson 01 implementation from the frozen [`lesson-01`](h
 
 ### Lesson 02 — Build a Retrieval Baseline Before Embeddings
 
-**In progress.** Starting from the trustworthy materialized state established in Lesson 01, the next investigation measures how much relevant evidence a deliberately simple lexical retriever can recover before introducing embeddings.
+**Baseline implemented.** A standard-library retriever scores distinct title/body token overlap, filters tenants before scoring, and returns at most five current document versions. The evaluator measures required-evidence recall, precision, complete coverage, distractors and latency against the unchanged eight cases.
+
+```bash
+.venv/bin/python scripts/evaluate_retrieval.py --repeats 10 --output /tmp/north-004-run.json
+```
+
+Use a new output filename. The command creates its own temporary database. See the [methodology](docs/requirements/NORTH-004.md), [benchmark instructions](benchmarks/README.md), and [baseline JSON report](benchmarks/results/north-004-baseline.json).
 
 ## Author
 

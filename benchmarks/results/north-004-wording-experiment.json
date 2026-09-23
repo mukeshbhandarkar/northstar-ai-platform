@@ -1,0 +1,2901 @@
+{
+  "experiment": "NORTH-004 controlled query-wording experiment",
+  "created_at_utc": "2026-09-23T18:50:05.491532+00:00",
+  "invocation": "/home/mack/hf-projects/northstar tech/northstar-ai-platform/.venv/bin/python scripts/experiment_query_wording.py --output /home/mack/hf-projects/northstar tech/northstar-ai-platform/benchmarks/results/north-004-wording-experiment.json",
+  "environment": {
+    "python": "3.12.13 (main, Aug  7 2026, 02:25:39) [Clang 22.1.3 ]",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.31",
+    "sqlite": "3.53.1"
+  },
+  "baseline": {
+    "path": "benchmarks/results/north-004-baseline.json",
+    "sha256": "7b9def6a52ffe9e8e38e5c7d19074225691be6e096652b1a29c3277fd488f108",
+    "revalidated_before_run": true
+  },
+  "dataset": {
+    "version": "north-002-v2",
+    "manifest_sha256": "e08aaa64d1464330e579db68ed25f706fb54f0108128ede5fddf0e318613dc56",
+    "snapshot_as_of": "2026-09-17T14:07:00Z",
+    "ground_truth_sha256": "8aac67e83a4cffe422bd972c98980c6384a180c0f3603569774ae0a994e99102",
+    "snapshot_payload_count": 24
+  },
+  "controls": {
+    "retriever": "Existing services.retrieval.lexical.Retriever",
+    "algorithm": "distinct-token-overlap-v1",
+    "top_k": 5,
+    "corpus": "Fresh replayed materialized snapshot; same 24 current document versions",
+    "labels": "Unmodified existing ground_truth.json",
+    "scoring": "scripts.evaluate_retrieval.score_case; unchanged NORTH-004 definitions",
+    "changed_variable": "Query string only",
+    "latency_comparison": "Not measured; this is a wording sensitivity experiment"
+  },
+  "cases": [
+    {
+      "case_id": "ACME-001",
+      "tenant_id": "acmepay",
+      "original_question": "Why are checkout payments failing after today's deployment?",
+      "required_evidence": [
+        {
+          "tenant_id": "acmepay",
+          "document_id": "DEP-470",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "PR-1842",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "INC-071",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "RB-001",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "SUP-301",
+          "source_version": 1
+        }
+      ],
+      "acceptable_supporting_evidence": [
+        {
+          "tenant_id": "acmepay",
+          "document_id": "ARCH-001",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "DEP-460",
+          "source_version": 1
+        }
+      ],
+      "variants": [
+        {
+          "variant_id": "original",
+          "kind": "original",
+          "query": "Why are checkout payments failing after today's deployment?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "score": 3,
+              "matched_tokens": [
+                "after",
+                "are",
+                "checkout"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "score": 2,
+              "matched_tokens": [
+                "after",
+                "checkout"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "score": 2,
+              "matched_tokens": [
+                "checkout",
+                "deployment"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-303",
+              "source_version": 4,
+              "score": 2,
+              "matched_tokens": [
+                "after",
+                "checkout"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "score": 1,
+              "matched_tokens": [
+                "checkout"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "title": "SUP-301: checkout failures after lunchtime release",
+              "score": 3,
+              "matched_tokens": [
+                "after",
+                "are",
+                "checkout"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "title": "Provider adapter deadlines and retries",
+              "score": 2,
+              "matched_tokens": [
+                "after",
+                "checkout"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "title": "Checkout connection acquisition triage",
+              "score": 2,
+              "matched_tokens": [
+                "checkout",
+                "deployment"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-303",
+              "source_version": 4,
+              "title": "SUP-303: duplicate checkout receipt notice",
+              "score": 2,
+              "matched_tokens": [
+                "after",
+                "checkout"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "title": "Checkout authorization request path",
+              "score": 1,
+              "matched_tokens": [
+                "checkout"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 0.4,
+            "precision_at_returned_count": 0.6,
+            "complete_required_evidence": false,
+            "required_hits": 2,
+            "required_count": 5,
+            "returned_count": 5,
+            "missing_required_evidence": [
+              {
+                "tenant_id": "acmepay",
+                "document_id": "DEP-470",
+                "source_version": 1
+              },
+              {
+                "tenant_id": "acmepay",
+                "document_id": "PR-1842",
+                "source_version": 1
+              },
+              {
+                "tenant_id": "acmepay",
+                "document_id": "INC-071",
+                "source_version": 1
+              }
+            ]
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [],
+            "added_tokens_also_in_required_documents": [],
+            "introduces_required_document_terms": false,
+            "independent_evaluation_data": false,
+            "note": "Exploratory query variant; derived for this fixed labeled experiment."
+          }
+        },
+        {
+          "variant_id": "A_natural_paraphrase",
+          "kind": "A_natural_paraphrase",
+          "query": "What evidence connects the checkout payment failures with the latest rollout?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "payment",
+                "the",
+                "with"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-082",
+              "source_version": 1,
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "failures",
+                "payment",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "payment",
+                "the",
+                "with"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "failures",
+                "payment",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "score": 3,
+              "matched_tokens": [
+                "checkout",
+                "payment",
+                "the"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "title": "DEP-460: checkout-api v4.6.9 receipt patch",
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "payment",
+                "the",
+                "with"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-082",
+              "source_version": 1,
+              "title": "INC-082: provider response deadline failures",
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "failures",
+                "payment",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "title": "Checkout connection acquisition triage",
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "payment",
+                "the",
+                "with"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "title": "SUP-301: checkout failures after lunchtime release",
+              "score": 4,
+              "matched_tokens": [
+                "checkout",
+                "failures",
+                "payment",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "title": "Checkout authorization request path",
+              "score": 3,
+              "matched_tokens": [
+                "checkout",
+                "payment",
+                "the"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 0.4,
+            "precision_at_returned_count": 0.8,
+            "complete_required_evidence": false,
+            "required_hits": 2,
+            "required_count": 5,
+            "returned_count": 5,
+            "missing_required_evidence": [
+              {
+                "tenant_id": "acmepay",
+                "document_id": "DEP-470",
+                "source_version": 1
+              },
+              {
+                "tenant_id": "acmepay",
+                "document_id": "PR-1842",
+                "source_version": 1
+              },
+              {
+                "tenant_id": "acmepay",
+                "document_id": "INC-071",
+                "source_version": 1
+              }
+            ]
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [
+              "connects",
+              "evidence",
+              "failures",
+              "latest",
+              "payment",
+              "rollout",
+              "the",
+              "what",
+              "with"
+            ],
+            "added_tokens_also_in_required_documents": [
+              {
+                "token": "failures",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "payment",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "rollout",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "the",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "with",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  }
+                ]
+              }
+            ],
+            "introduces_required_document_terms": true,
+            "independent_evaluation_data": false,
+            "note": "Exploratory: this phrasing includes terms found in labeled required evidence."
+          },
+          "comparison_to_original": {
+            "rankings_changed": true,
+            "results_added": [
+              [
+                "acmepay",
+                "DEP-460",
+                1
+              ],
+              [
+                "acmepay",
+                "INC-082",
+                1
+              ]
+            ],
+            "results_removed": [
+              [
+                "acmepay",
+                "ARCH-002",
+                1
+              ],
+              [
+                "acmepay",
+                "SUP-303",
+                4
+              ]
+            ],
+            "recall_delta": 0.0,
+            "precision_delta": 0.20000000000000007,
+            "complete_evidence_changed": false
+          }
+        },
+        {
+          "variant_id": "B_explicit_technical",
+          "kind": "B_explicit_technical",
+          "query": "Did the v4.7 checkout-api rollout's per-worker payment-client connection-pool limit reduction precede acquisition timeouts?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "connection",
+                "payment",
+                "per",
+                "pool",
+                "the",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "payment",
+                "per",
+                "pool",
+                "the",
+                "v4",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-071",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "acquisition",
+                "api",
+                "checkout",
+                "client",
+                "payment",
+                "pool",
+                "the",
+                "timeouts",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1842",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "7",
+                "api",
+                "checkout",
+                "client",
+                "payment",
+                "per",
+                "pool",
+                "v4",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1830",
+              "source_version": 1,
+              "score": 8,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "connection",
+                "payment",
+                "pool",
+                "the",
+                "v4"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "title": "Checkout authorization request path",
+              "score": 9,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "connection",
+                "payment",
+                "per",
+                "pool",
+                "the",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "title": "DEP-460: checkout-api v4.6.9 receipt patch",
+              "score": 9,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "payment",
+                "per",
+                "pool",
+                "the",
+                "v4",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-071",
+              "source_version": 1,
+              "title": "INC-071: checkout queueing during sale",
+              "score": 9,
+              "matched_tokens": [
+                "acquisition",
+                "api",
+                "checkout",
+                "client",
+                "payment",
+                "pool",
+                "the",
+                "timeouts",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1842",
+              "source_version": 1,
+              "title": "PR-1842: bound checkout payment-client sockets",
+              "score": 9,
+              "matched_tokens": [
+                "7",
+                "api",
+                "checkout",
+                "client",
+                "payment",
+                "per",
+                "pool",
+                "v4",
+                "worker"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1830",
+              "source_version": 1,
+              "title": "PR-1830: checkout receipt label correction",
+              "score": 8,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "connection",
+                "payment",
+                "pool",
+                "the",
+                "v4"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 0.4,
+            "precision_at_returned_count": 0.8,
+            "complete_required_evidence": false,
+            "required_hits": 2,
+            "required_count": 5,
+            "returned_count": 5,
+            "missing_required_evidence": [
+              {
+                "tenant_id": "acmepay",
+                "document_id": "DEP-470",
+                "source_version": 1
+              },
+              {
+                "tenant_id": "acmepay",
+                "document_id": "RB-001",
+                "source_version": 1
+              },
+              {
+                "tenant_id": "acmepay",
+                "document_id": "SUP-301",
+                "source_version": 1
+              }
+            ]
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [
+              "7",
+              "acquisition",
+              "api",
+              "client",
+              "connection",
+              "did",
+              "limit",
+              "payment",
+              "per",
+              "pool",
+              "precede",
+              "reduction",
+              "rollout",
+              "the",
+              "timeouts",
+              "v4",
+              "worker"
+            ],
+            "added_tokens_also_in_required_documents": [
+              {
+                "token": "7",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "acquisition",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "api",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "client",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "connection",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "payment",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "per",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "pool",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "rollout",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "the",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "SUP-301",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "timeouts",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "v4",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "worker",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "INC-071",
+                    "source_version": 1
+                  }
+                ]
+              }
+            ],
+            "introduces_required_document_terms": true,
+            "independent_evaluation_data": false,
+            "note": "Exploratory: this phrasing includes terms found in labeled required evidence."
+          },
+          "comparison_to_original": {
+            "rankings_changed": true,
+            "results_added": [
+              [
+                "acmepay",
+                "DEP-460",
+                1
+              ],
+              [
+                "acmepay",
+                "INC-071",
+                1
+              ],
+              [
+                "acmepay",
+                "PR-1842",
+                1
+              ],
+              [
+                "acmepay",
+                "PR-1830",
+                1
+              ]
+            ],
+            "results_removed": [
+              [
+                "acmepay",
+                "SUP-301",
+                1
+              ],
+              [
+                "acmepay",
+                "ARCH-002",
+                1
+              ],
+              [
+                "acmepay",
+                "RB-001",
+                1
+              ],
+              [
+                "acmepay",
+                "SUP-303",
+                4
+              ]
+            ],
+            "recall_delta": 0.0,
+            "precision_delta": 0.20000000000000007,
+            "complete_evidence_changed": false
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "ACME-003",
+      "tenant_id": "acmepay",
+      "original_question": "What changed in the September 17 14:03 ap-south-1 checkout-api deployment?",
+      "required_evidence": [
+        {
+          "tenant_id": "acmepay",
+          "document_id": "DEP-470",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "PR-1842",
+          "source_version": 1
+        }
+      ],
+      "acceptable_supporting_evidence": [
+        {
+          "tenant_id": "acmepay",
+          "document_id": "DEP-460",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "ARCH-001",
+          "source_version": 1
+        }
+      ],
+      "variants": [
+        {
+          "variant_id": "original",
+          "kind": "original",
+          "query": "What changed in the September 17 14:03 ap-south-1 checkout-api deployment?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-470",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "03",
+                "1",
+                "14",
+                "17",
+                "ap",
+                "api",
+                "checkout",
+                "in",
+                "south"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "14",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-071",
+              "source_version": 1,
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-090",
+              "source_version": 1,
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-470",
+              "source_version": 1,
+              "title": "DEP-470: checkout-api v4.7 regional rollout",
+              "score": 9,
+              "matched_tokens": [
+                "03",
+                "1",
+                "14",
+                "17",
+                "ap",
+                "api",
+                "checkout",
+                "in",
+                "south"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "title": "SUP-301: checkout failures after lunchtime release",
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "14",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "title": "DEP-460: checkout-api v4.6.9 receipt patch",
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-071",
+              "source_version": 1,
+              "title": "INC-071: checkout queueing during sale",
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-090",
+              "source_version": 1,
+              "title": "INC-090: fraud refresh stalls checkout",
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 0.5,
+            "precision_at_returned_count": 0.4,
+            "complete_required_evidence": false,
+            "required_hits": 1,
+            "required_count": 2,
+            "returned_count": 5,
+            "missing_required_evidence": [
+              {
+                "tenant_id": "acmepay",
+                "document_id": "PR-1842",
+                "source_version": 1
+              }
+            ]
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [],
+            "added_tokens_also_in_required_documents": [],
+            "introduces_required_document_terms": false,
+            "independent_evaluation_data": false,
+            "note": "Exploratory query variant; derived for this fixed labeled experiment."
+          }
+        },
+        {
+          "variant_id": "A_natural_paraphrase",
+          "kind": "A_natural_paraphrase",
+          "query": "Which changes went out in the September 17 checkout-api release in ap-south-1?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-470",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "1",
+                "17",
+                "ap",
+                "api",
+                "checkout",
+                "in",
+                "out",
+                "release",
+                "south"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "release",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-090",
+              "source_version": 1,
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "out",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "release",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-071",
+              "source_version": 1,
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-470",
+              "source_version": 1,
+              "title": "DEP-470: checkout-api v4.7 regional rollout",
+              "score": 9,
+              "matched_tokens": [
+                "1",
+                "17",
+                "ap",
+                "api",
+                "checkout",
+                "in",
+                "out",
+                "release",
+                "south"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "title": "DEP-460: checkout-api v4.6.9 receipt patch",
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "release",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-090",
+              "source_version": 1,
+              "title": "INC-090: fraud refresh stalls checkout",
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "out",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "title": "SUP-301: checkout failures after lunchtime release",
+              "score": 7,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "release",
+                "south",
+                "the"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-071",
+              "source_version": 1,
+              "title": "INC-071: checkout queueing during sale",
+              "score": 6,
+              "matched_tokens": [
+                "1",
+                "ap",
+                "api",
+                "checkout",
+                "south",
+                "the"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 0.5,
+            "precision_at_returned_count": 0.4,
+            "complete_required_evidence": false,
+            "required_hits": 1,
+            "required_count": 2,
+            "returned_count": 5,
+            "missing_required_evidence": [
+              {
+                "tenant_id": "acmepay",
+                "document_id": "PR-1842",
+                "source_version": 1
+              }
+            ]
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [
+              "changes",
+              "out",
+              "release",
+              "went",
+              "which"
+            ],
+            "added_tokens_also_in_required_documents": [
+              {
+                "token": "out",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "release",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              }
+            ],
+            "introduces_required_document_terms": true,
+            "independent_evaluation_data": false,
+            "note": "Exploratory: this phrasing includes terms found in labeled required evidence."
+          },
+          "comparison_to_original": {
+            "rankings_changed": true,
+            "results_added": [],
+            "results_removed": [],
+            "recall_delta": 0.0,
+            "precision_delta": 0.0,
+            "complete_evidence_changed": false
+          }
+        },
+        {
+          "variant_id": "B_explicit_technical",
+          "kind": "B_explicit_technical",
+          "query": "Which release record pairs DEP-470 checkout-api v4.7 with PR-1842 and its 48-to-8 payment_client.pool.max_connections change?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1842",
+              "source_version": 1,
+              "score": 15,
+              "matched_tokens": [
+                "1842",
+                "48",
+                "7",
+                "8",
+                "api",
+                "change",
+                "checkout",
+                "client",
+                "connections",
+                "max",
+                "payment",
+                "pool",
+                "pr",
+                "release",
+                "v4"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-470",
+              "source_version": 1,
+              "score": 13,
+              "matched_tokens": [
+                "1842",
+                "470",
+                "7",
+                "and",
+                "api",
+                "checkout",
+                "dep",
+                "payment",
+                "pr",
+                "record",
+                "release",
+                "to",
+                "v4"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "score": 12,
+              "matched_tokens": [
+                "48",
+                "api",
+                "checkout",
+                "client",
+                "dep",
+                "payment",
+                "pool",
+                "pr",
+                "release",
+                "to",
+                "v4",
+                "with"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "score": 10,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "connections",
+                "its",
+                "max",
+                "payment",
+                "pool",
+                "release",
+                "to"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "and",
+                "api",
+                "change",
+                "checkout",
+                "client",
+                "connections",
+                "payment",
+                "release",
+                "with"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1842",
+              "source_version": 1,
+              "title": "PR-1842: bound checkout payment-client sockets",
+              "score": 15,
+              "matched_tokens": [
+                "1842",
+                "48",
+                "7",
+                "8",
+                "api",
+                "change",
+                "checkout",
+                "client",
+                "connections",
+                "max",
+                "payment",
+                "pool",
+                "pr",
+                "release",
+                "v4"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-470",
+              "source_version": 1,
+              "title": "DEP-470: checkout-api v4.7 regional rollout",
+              "score": 13,
+              "matched_tokens": [
+                "1842",
+                "470",
+                "7",
+                "and",
+                "api",
+                "checkout",
+                "dep",
+                "payment",
+                "pr",
+                "record",
+                "release",
+                "to",
+                "v4"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "DEP-460",
+              "source_version": 1,
+              "title": "DEP-460: checkout-api v4.6.9 receipt patch",
+              "score": 12,
+              "matched_tokens": [
+                "48",
+                "api",
+                "checkout",
+                "client",
+                "dep",
+                "payment",
+                "pool",
+                "pr",
+                "release",
+                "to",
+                "v4",
+                "with"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "title": "Checkout authorization request path",
+              "score": 10,
+              "matched_tokens": [
+                "api",
+                "checkout",
+                "client",
+                "connections",
+                "its",
+                "max",
+                "payment",
+                "pool",
+                "release",
+                "to"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "title": "Checkout connection acquisition triage",
+              "score": 9,
+              "matched_tokens": [
+                "and",
+                "api",
+                "change",
+                "checkout",
+                "client",
+                "connections",
+                "payment",
+                "release",
+                "with"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 1.0,
+            "precision_at_returned_count": 0.8,
+            "complete_required_evidence": true,
+            "required_hits": 2,
+            "required_count": 2,
+            "returned_count": 5,
+            "missing_required_evidence": []
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [
+              "1842",
+              "470",
+              "48",
+              "7",
+              "8",
+              "and",
+              "change",
+              "client",
+              "connections",
+              "dep",
+              "its",
+              "max",
+              "pairs",
+              "payment",
+              "pool",
+              "pr",
+              "record",
+              "release",
+              "to",
+              "v4",
+              "which",
+              "with"
+            ],
+            "added_tokens_also_in_required_documents": [
+              {
+                "token": "1842",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "470",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "48",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "7",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "8",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "and",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "change",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "client",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "connections",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "dep",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "max",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "payment",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "pool",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "pr",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "record",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "release",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "to",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "v4",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "DEP-470",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "PR-1842",
+                    "source_version": 1
+                  }
+                ]
+              }
+            ],
+            "introduces_required_document_terms": true,
+            "independent_evaluation_data": false,
+            "note": "Exploratory: this phrasing includes terms found in labeled required evidence."
+          },
+          "comparison_to_original": {
+            "rankings_changed": true,
+            "results_added": [
+              [
+                "acmepay",
+                "PR-1842",
+                1
+              ],
+              [
+                "acmepay",
+                "ARCH-001",
+                1
+              ],
+              [
+                "acmepay",
+                "RB-001",
+                1
+              ]
+            ],
+            "results_removed": [
+              [
+                "acmepay",
+                "SUP-301",
+                1
+              ],
+              [
+                "acmepay",
+                "INC-071",
+                1
+              ],
+              [
+                "acmepay",
+                "INC-090",
+                1
+              ]
+            ],
+            "recall_delta": 0.5,
+            "precision_delta": 0.4,
+            "complete_evidence_changed": true
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "ACME-004",
+      "tenant_id": "acmepay",
+      "original_question": "How should on-call safely distinguish checkout payment-client acquisition delays from provider timeouts?",
+      "required_evidence": [
+        {
+          "tenant_id": "acmepay",
+          "document_id": "RB-001",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "RB-002",
+          "source_version": 1
+        }
+      ],
+      "acceptable_supporting_evidence": [
+        {
+          "tenant_id": "acmepay",
+          "document_id": "ARCH-002",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "INC-071",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "INC-082",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "ARCH-001",
+          "source_version": 1
+        },
+        {
+          "tenant_id": "acmepay",
+          "document_id": "RB-003",
+          "source_version": 1
+        }
+      ],
+      "variants": [
+        {
+          "variant_id": "original",
+          "kind": "original",
+          "query": "How should on-call safely distinguish checkout payment-client acquisition delays from provider timeouts?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "acquisition",
+                "call",
+                "checkout",
+                "client",
+                "distinguish",
+                "from",
+                "on",
+                "payment",
+                "provider"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "score": 7,
+              "matched_tokens": [
+                "acquisition",
+                "call",
+                "checkout",
+                "client",
+                "from",
+                "on",
+                "payment"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1842",
+              "source_version": 1,
+              "score": 6,
+              "matched_tokens": [
+                "call",
+                "checkout",
+                "client",
+                "on",
+                "payment",
+                "provider"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "score": 5,
+              "matched_tokens": [
+                "checkout",
+                "client",
+                "from",
+                "payment",
+                "provider"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "score": 5,
+              "matched_tokens": [
+                "checkout",
+                "client",
+                "from",
+                "payment",
+                "provider"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "title": "Checkout connection acquisition triage",
+              "score": 9,
+              "matched_tokens": [
+                "acquisition",
+                "call",
+                "checkout",
+                "client",
+                "distinguish",
+                "from",
+                "on",
+                "payment",
+                "provider"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "SUP-301",
+              "source_version": 1,
+              "title": "SUP-301: checkout failures after lunchtime release",
+              "score": 7,
+              "matched_tokens": [
+                "acquisition",
+                "call",
+                "checkout",
+                "client",
+                "from",
+                "on",
+                "payment"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1842",
+              "source_version": 1,
+              "title": "PR-1842: bound checkout payment-client sockets",
+              "score": 6,
+              "matched_tokens": [
+                "call",
+                "checkout",
+                "client",
+                "on",
+                "payment",
+                "provider"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "title": "Checkout authorization request path",
+              "score": 5,
+              "matched_tokens": [
+                "checkout",
+                "client",
+                "from",
+                "payment",
+                "provider"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "title": "Provider adapter deadlines and retries",
+              "score": 5,
+              "matched_tokens": [
+                "checkout",
+                "client",
+                "from",
+                "payment",
+                "provider"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 0.5,
+            "precision_at_returned_count": 0.6,
+            "complete_required_evidence": false,
+            "required_hits": 1,
+            "required_count": 2,
+            "returned_count": 5,
+            "missing_required_evidence": [
+              {
+                "tenant_id": "acmepay",
+                "document_id": "RB-002",
+                "source_version": 1
+              }
+            ]
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [],
+            "added_tokens_also_in_required_documents": [],
+            "introduces_required_document_terms": false,
+            "independent_evaluation_data": false,
+            "note": "Exploratory query variant; derived for this fixed labeled experiment."
+          }
+        },
+        {
+          "variant_id": "A_natural_paraphrase",
+          "kind": "A_natural_paraphrase",
+          "query": "How can on-call tell whether payment is waiting for a checkout connection or for an upstream provider response?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "score": 12,
+              "matched_tokens": [
+                "a",
+                "call",
+                "checkout",
+                "connection",
+                "for",
+                "on",
+                "or",
+                "payment",
+                "provider",
+                "response",
+                "upstream",
+                "waiting"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-003",
+              "source_version": 1,
+              "score": 10,
+              "matched_tokens": [
+                "a",
+                "an",
+                "checkout",
+                "connection",
+                "for",
+                "is",
+                "or",
+                "payment",
+                "waiting",
+                "whether"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "score": 8,
+              "matched_tokens": [
+                "a",
+                "checkout",
+                "connection",
+                "for",
+                "payment",
+                "provider",
+                "response",
+                "waiting"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1830",
+              "source_version": 1,
+              "score": 8,
+              "matched_tokens": [
+                "a",
+                "checkout",
+                "connection",
+                "for",
+                "or",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-002",
+              "source_version": 1,
+              "score": 8,
+              "matched_tokens": [
+                "a",
+                "can",
+                "checkout",
+                "connection",
+                "for",
+                "payment",
+                "provider",
+                "response"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "title": "Checkout connection acquisition triage",
+              "score": 12,
+              "matched_tokens": [
+                "a",
+                "call",
+                "checkout",
+                "connection",
+                "for",
+                "on",
+                "or",
+                "payment",
+                "provider",
+                "response",
+                "upstream",
+                "waiting"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-003",
+              "source_version": 1,
+              "title": "Fraud decision latency triage",
+              "score": 10,
+              "matched_tokens": [
+                "a",
+                "an",
+                "checkout",
+                "connection",
+                "for",
+                "is",
+                "or",
+                "payment",
+                "waiting",
+                "whether"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "title": "Provider adapter deadlines and retries",
+              "score": 8,
+              "matched_tokens": [
+                "a",
+                "checkout",
+                "connection",
+                "for",
+                "payment",
+                "provider",
+                "response",
+                "waiting"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "PR-1830",
+              "source_version": 1,
+              "title": "PR-1830: checkout receipt label correction",
+              "score": 8,
+              "matched_tokens": [
+                "a",
+                "checkout",
+                "connection",
+                "for",
+                "or",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-002",
+              "source_version": 1,
+              "title": "Provider timeout investigation",
+              "score": 8,
+              "matched_tokens": [
+                "a",
+                "can",
+                "checkout",
+                "connection",
+                "for",
+                "payment",
+                "provider",
+                "response"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 1.0,
+            "precision_at_returned_count": 0.8,
+            "complete_required_evidence": true,
+            "required_hits": 2,
+            "required_count": 2,
+            "returned_count": 5,
+            "missing_required_evidence": []
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [
+              "a",
+              "an",
+              "can",
+              "connection",
+              "for",
+              "is",
+              "or",
+              "response",
+              "tell",
+              "upstream",
+              "waiting",
+              "whether"
+            ],
+            "added_tokens_also_in_required_documents": [
+              {
+                "token": "a",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "can",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "connection",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "for",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "or",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "response",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "upstream",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "waiting",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  }
+                ]
+              }
+            ],
+            "introduces_required_document_terms": true,
+            "independent_evaluation_data": false,
+            "note": "Exploratory: this phrasing includes terms found in labeled required evidence."
+          },
+          "comparison_to_original": {
+            "rankings_changed": true,
+            "results_added": [
+              [
+                "acmepay",
+                "RB-003",
+                1
+              ],
+              [
+                "acmepay",
+                "PR-1830",
+                1
+              ],
+              [
+                "acmepay",
+                "RB-002",
+                1
+              ]
+            ],
+            "results_removed": [
+              [
+                "acmepay",
+                "SUP-301",
+                1
+              ],
+              [
+                "acmepay",
+                "PR-1842",
+                1
+              ],
+              [
+                "acmepay",
+                "ARCH-001",
+                1
+              ]
+            ],
+            "recall_delta": 0.5,
+            "precision_delta": 0.20000000000000007,
+            "complete_evidence_changed": true
+          }
+        },
+        {
+          "variant_id": "B_explicit_technical",
+          "kind": "B_explicit_technical",
+          "query": "How should responders distinguish checkout-api payment-client acquire timeouts before dispatch from provider-adapter response deadlines after dispatch?",
+          "matched_tokens_by_result": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "score": 11,
+              "matched_tokens": [
+                "adapter",
+                "after",
+                "api",
+                "checkout",
+                "client",
+                "deadlines",
+                "dispatch",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "score": 11,
+              "matched_tokens": [
+                "acquire",
+                "adapter",
+                "api",
+                "before",
+                "checkout",
+                "client",
+                "distinguish",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "acquire",
+                "adapter",
+                "api",
+                "checkout",
+                "client",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-002",
+              "source_version": 1,
+              "score": 9,
+              "matched_tokens": [
+                "adapter",
+                "api",
+                "checkout",
+                "deadlines",
+                "dispatch",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-082",
+              "source_version": 1,
+              "score": 8,
+              "matched_tokens": [
+                "adapter",
+                "api",
+                "checkout",
+                "deadlines",
+                "dispatch",
+                "payment",
+                "provider",
+                "response"
+              ]
+            }
+          ],
+          "rankings": [
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-002",
+              "source_version": 1,
+              "title": "Provider adapter deadlines and retries",
+              "score": 11,
+              "matched_tokens": [
+                "adapter",
+                "after",
+                "api",
+                "checkout",
+                "client",
+                "deadlines",
+                "dispatch",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-001",
+              "source_version": 1,
+              "title": "Checkout connection acquisition triage",
+              "score": 11,
+              "matched_tokens": [
+                "acquire",
+                "adapter",
+                "api",
+                "before",
+                "checkout",
+                "client",
+                "distinguish",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "ARCH-001",
+              "source_version": 1,
+              "title": "Checkout authorization request path",
+              "score": 9,
+              "matched_tokens": [
+                "acquire",
+                "adapter",
+                "api",
+                "checkout",
+                "client",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "RB-002",
+              "source_version": 1,
+              "title": "Provider timeout investigation",
+              "score": 9,
+              "matched_tokens": [
+                "adapter",
+                "api",
+                "checkout",
+                "deadlines",
+                "dispatch",
+                "from",
+                "payment",
+                "provider",
+                "response"
+              ]
+            },
+            {
+              "tenant_id": "acmepay",
+              "document_id": "INC-082",
+              "source_version": 1,
+              "title": "INC-082: provider response deadline failures",
+              "score": 8,
+              "matched_tokens": [
+                "adapter",
+                "api",
+                "checkout",
+                "deadlines",
+                "dispatch",
+                "payment",
+                "provider",
+                "response"
+              ]
+            }
+          ],
+          "metrics": {
+            "required_recall_at_5": 1.0,
+            "precision_at_returned_count": 1.0,
+            "complete_required_evidence": true,
+            "required_hits": 2,
+            "required_count": 2,
+            "returned_count": 5,
+            "missing_required_evidence": []
+          },
+          "term_provenance": {
+            "tokens_added_vs_original": [
+              "acquire",
+              "adapter",
+              "after",
+              "api",
+              "before",
+              "deadlines",
+              "dispatch",
+              "responders",
+              "response"
+            ],
+            "added_tokens_also_in_required_documents": [
+              {
+                "token": "acquire",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "adapter",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "api",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "before",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "deadlines",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "dispatch",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              },
+              {
+                "token": "response",
+                "required_documents": [
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-001",
+                    "source_version": 1
+                  },
+                  {
+                    "tenant_id": "acmepay",
+                    "document_id": "RB-002",
+                    "source_version": 1
+                  }
+                ]
+              }
+            ],
+            "introduces_required_document_terms": true,
+            "independent_evaluation_data": false,
+            "note": "Exploratory: this phrasing includes terms found in labeled required evidence."
+          },
+          "comparison_to_original": {
+            "rankings_changed": true,
+            "results_added": [
+              [
+                "acmepay",
+                "RB-002",
+                1
+              ],
+              [
+                "acmepay",
+                "INC-082",
+                1
+              ]
+            ],
+            "results_removed": [
+              [
+                "acmepay",
+                "SUP-301",
+                1
+              ],
+              [
+                "acmepay",
+                "PR-1842",
+                1
+              ]
+            ],
+            "recall_delta": 0.5,
+            "precision_delta": 0.4,
+            "complete_evidence_changed": true
+          }
+        }
+      ]
+    }
+  ],
+  "replay": {
+    "outcomes": {
+      "APPLIED": 27,
+      "DUPLICATE": 4,
+      "STALE": 2,
+      "INVALID": 0
+    },
+    "manifest_match": true,
+    "active_by_tenant": {
+      "acmepay": 18,
+      "betashop": 6
+    }
+  }
+}

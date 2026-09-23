@@ -1,13 +1,13 @@
 # Initial SLO/SLI targets
 
-Every threshold below is a **TARGET**, chosen provisionally for a future local baseline. **MEASURED RESULT: NOT RUN** for every row. These are not customer commitments or achieved service levels.
+Every threshold below is a **TARGET**, chosen provisionally for a future local baseline. NORTH-004 records retrieval latency in a [local run artifact](../../benchmarks/results/north-004-baseline.json); other timed measurements remain **NOT RUN**. These are not customer commitments or achieved service levels.
 
 Assumed evaluation window: one complete reproducible benchmark run on the documented CPU machine, at most 1,000 small documents, sequential ingestion, and one investigation at a time. Report actual sample counts and run duration; do not imply a monthly availability SLO. See the [benchmark contract](../../benchmarks/README.md).
 
 | SLI | Measurement boundary | Initial TARGET | MEASURED RESULT |
 | --- | --- | --- | --- |
 | Knowledge freshness lag | Source commits an upsert → retrieval returns its exact tenant/document/version | p95 ≤ 5 seconds | NOT RUN |
-| Retrieval latency | Valid retrieval request accepted → complete ranked result returned, including storage access | p95 ≤ 250 ms; report p50/p95/p99 | NOT RUN |
+| Retrieval latency | Valid retrieval request accepted → complete ranked result returned, including storage access | p95 ≤ 250 ms; report p50/p95/p99 | See NORTH-004 run artifact; eight synthetic queries, not service-level attainment |
 | Deletion visibility | Source commits a delete → document is absent from all tested retrieval paths and remains absent during duplicate/stale replay unless a legitimate strictly newer upsert restores it | p95 ≤ 5 seconds; no resurrection by older events | NOT RUN |
 | Duplicate-event tolerance | Replay an identical event ID/envelope/payload; compare materialized state and retrieval with a single-delivery control | Zero extra visible documents or state changes attributable to duplicates | NOT RUN |
 | Tenant isolation | Query with tenant A context against mixed-tenant fixtures, including colliding document IDs | Zero foreign-tenant results, citations, or document payloads; missing tenant context rejected | NOT RUN |
