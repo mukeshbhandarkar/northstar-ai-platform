@@ -36,10 +36,10 @@ flowchart TB
     sources["Enterprise Sources<br/>synthetic fixture: implemented"]
     ingest["Ingestion & Validation<br/>local replay: implemented"]
     state["Materialized Knowledge State<br/>SQLite: implemented"]
-    retrieval["Lexical Retrieval<br/>implemented"]
+    retrieval["Lexical / Dense / Hybrid Retrieval<br/>implemented"]
     agents["Agent Orchestration<br/>future"]
     serving["Model Serving<br/>future"]
-    evaluation["Lexical Evaluation<br/>implemented"]
+    evaluation["Retrieval Comparison<br/>implemented"]
     cross["Observability / Reliability<br/>future, cross-cutting"]
 
     sources --> ingest --> state
@@ -61,8 +61,8 @@ flowchart TB
 | # | Lesson | Engineering problem | Status |
 | --- | --- | --- | --- |
 | 01 | Trust the Data Before You Retrieve It | Deletions, stale events, idempotency, tombstones | **PUBLISHED** |
-| 02 | Build a Retrieval Baseline Before Embeddings | Lexical retrieval, evidence coverage, failure analysis | **CURRENT** |
-| 03 | When Lexical Search Stops Being Enough | Dense retrieval, hybrid search, reranking | PLANNED |
+| 02 | Build a Retrieval Baseline Before Embeddings | Lexical retrieval, evidence coverage, failure analysis | COMPLETED |
+| 03 | When Lexical Search Stops Being Enough | Dense retrieval, rank fusion, failure analysis | **CURRENT** |
 | 04 | Fresh Data Is a Feature | Event ingestion, indexing lag, freshness SLOs | PLANNED |
 | 05 | Make the Agent Prove Its Answer | Tools, evidence, citations, bounded workflows | PLANNED |
 | 06 | What Happens When the Agent Retries? | Idempotent tools, checkpoints, side effects, Redis | PLANNED |
@@ -114,7 +114,7 @@ The implementation and evidence are in:
 
 ## Reproduce it locally
 
-Use Python 3.12 from the repository root. There are no third-party runtime or test dependencies.
+Use Python 3.12 from the repository root. The lexical baseline and ordinary tests have no third-party dependencies. Lesson 03 real-model experiments use optional CPU encoder packages.
 
 ```bash
 python scripts/validate_dataset.py
@@ -169,15 +169,16 @@ python scripts/replay_events.py \
 
 ## Current limitations
 
-This is a local, single-process, CPU-first experiment using SQLite and synthetic tenants/data. Retrieval uses deterministic title/body token overlap over current tenant-scoped rows. It has no LLM inference, vector database, Kafka, Redis, vLLM, LMCache, or Kubernetes. The eight-case local evaluation does not establish production-scale performance.
+This is a local, single-process, CPU-first experiment using SQLite and synthetic tenants/data. Retrieval supports deterministic title/body token overlap, optional local CPU dense embeddings, and hybrid rank fusion over current tenant-scoped rows. It has no LLM inference, vector database, Kafka, Redis, vLLM, LMCache, or Kubernetes. The eight-case local evaluation does not establish production-scale performance.
 
 These are deliberate boundaries. Later components should be introduced only when a requirement or reproduced failure makes their cost and trade-offs measurable.
 
 ## Roadmap
 
 - **Completed:** trustworthy materialized source state (Lesson 01).
-- **Current:** deterministic retrieval baseline and evaluation (Lesson 02).
-- **Later:** hybrid retrieval; freshness and event streaming; bounded agents; model serving; KV/cache experiments; observability and failure recovery.
+- **Completed:** deterministic retrieval baseline and evaluation (Lesson 02).
+- **Current:** dense and hybrid retrieval comparison (Lesson 03).
+- **Later:** freshness and event streaming; bounded agents; model serving; KV/cache experiments; observability and failure recovery.
 
 ## Articles
 
@@ -198,6 +199,19 @@ Reproduce the committed Lesson 01 implementation from the frozen [`lesson-01`](h
 ```
 
 Use a new output filename. The command creates its own temporary database. See the [methodology](docs/requirements/NORTH-004.md), [benchmark instructions](benchmarks/README.md), and [baseline JSON report](benchmarks/results/north-004-baseline.json).
+
+## Lesson 03 — When Lexical Search Stops Being Enough
+
+The offline CPU comparison preserves the lexical baseline and adds a snapshot-reconciled dense index plus reciprocal rank fusion. Original-case Recall@5 is 0.7714 lexical, 0.9000 dense, and 0.8286 hybrid. PR-1842 coverage and unsupported-query behavior remain failures; hybrid does not consistently outperform dense retrieval.
+
+Read the [technical lesson](docs/lessons/lesson-03-semantic-retrieval.md), [measured comparison](benchmarks/results/lesson-03/comparison.md), and [optional encoder requirements](requirements-semantic.txt). Ordinary tests use deterministic fake encoders and need no model. To repeat the real-model ablations with the pinned weights already cached:
+
+```bash
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1 \
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+.venv/bin/python scripts/compare_retrieval.py \
+  --repeats 10 --output-dir /tmp/northstar-lesson03-new-run
+```
 
 ## Author
 

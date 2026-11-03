@@ -109,3 +109,9 @@ Observed misses and failure modes:
 These are findings of the fixed baseline. Labels, tokenizer and thresholds were
 not tuned after inspecting the measurements. The run artifact captures source
 provenance at execution time, before this observation summary was appended.
+
+## Lesson 03 comparison
+
+The [technical lesson](../docs/lessons/lesson-03-semantic-retrieval.md) documents the dense index lifecycle and RRF controls. The [comparison artifact](results/lesson-03/comparison.md) includes the unchanged original eight cases and a separately labeled three-case paraphrase experiment. Raw stage timings and source provenance accompany it.
+
+`evaluate_retrieval.py` retains default lexical behavior and adds `--mode semantic|hybrid`, `--rrf-k`, `--candidate-depth`, and `--challenge`. The fixed-five precision field is additive; legacy returned-count precision remains unchanged. `compare_retrieval.py --output-dir NEW_DIRECTORY` runs all six ablations with offline CPU settings and verifies identical snapshot hashes. Each mode uses a fresh replay. Model loading and initial indexing precede timed searches; later tenant index builds stay in the timed samples.
