@@ -1,0 +1,17 @@
+[
+  {
+    "case_id": "GAP-001",
+    "base_case_id": "ACME-001",
+    "question": "Why can shoppers no longer finish paying since the latest rollout?"
+  },
+  {
+    "case_id": "GAP-002",
+    "base_case_id": "ACME-004",
+    "question": "How can the responder tell whether requests are stuck waiting for a free socket or the payment company is taking too long to reply, without making things worse?"
+  },
+  {
+    "case_id": "GAP-003",
+    "base_case_id": "ACME-007",
+    "question": "What is the latest explanation for the shopper receiving the same receipt twice?"
+  }
+]

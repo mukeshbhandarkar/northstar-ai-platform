@@ -4,6 +4,7 @@ from collections import Counter
 from contextlib import redirect_stdout
 from datetime import datetime, timezone
 import hashlib
+import importlib.metadata
 import json
 import math
 import os
@@ -44,6 +45,7 @@ def score_case(case, results):
         'precision_at_returned_count': sum(identity(r) in relevant for r in results) / len(results)
         if results else None,
         'complete_required_evidence': required <= returned if required else None,
+        'precision_at_5': sum(identity(r) in relevant for r in results) / 5,
         'required_hits': hits, 'required_count': len(required),
         'returned_count': len(results),
         'misses': [r for r in case['expected_evidence'] if identity(r) not in returned],
@@ -108,14 +110,27 @@ def provenance():
     }
 
 
-def evaluate(dataset, repeats):
+def evaluate(dataset, repeats, *, mode="lexical", encoder=None, rrf_k=60, candidate_depth=20, challenge=None):
     if type(repeats) is not int or repeats < 1:
         raise ValueError('Repeats must be a positive integer')
+    if mode not in ("lexical", "semantic", "hybrid"):
+        raise ValueError("Unknown retrieval mode")
     dataset = Path(dataset).resolve()
     with redirect_stdout(sys.stderr):
         validate(dataset)
     manifest = json.loads((dataset / 'manifest.json').read_text())
     cases = json.loads((dataset / 'ground_truth.json').read_text())
+    if challenge is not None:
+        originals = {c['case_id']: c for c in cases}
+        additions = json.loads(Path(challenge).read_text())
+        cases = []
+        for item in additions:
+            if not isinstance(item['question'], str) or not item['question'].strip():
+                raise ValueError('Challenge question must be nonempty text')
+            cases.append({**originals[item['base_case_id']], 'case_id': item['case_id'],
+                          'question': item['question'], 'base_case_id': item['base_case_id']})
+        if not cases or len({c['case_id'] for c in cases}) != len(cases):
+            raise ValueError('Challenge IDs must be unique and nonempty')
     report = {
         'report_schema_version': 1, 'run_id': datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ'),
         'invocation': shlex.join([sys.executable, *sys.argv]),
@@ -147,11 +162,44 @@ def evaluate(dataset, repeats):
             rows = [r for tenant in store.tenants() for r in store.documents(tenant)]
             current = {identity(r) for r in rows}
             report['corpus'] = {
+                'snapshot_sha256': hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest(),
                 'documents': len(rows), 'by_tenant': dict(Counter(r['tenant_id'] for r in rows)),
                 'by_type': dict(Counter(json.loads(r['payload_json'])['document_type'] for r in rows)),
                 'snapshot_payload_bytes': sum((dataset / p).stat().st_size for p in manifest['snapshot_payloads']),
             }
-            retriever = Retriever(store)
+            report['configuration'].update(mode=mode, rrf_k=rrf_k, candidate_depth=candidate_depth,
+                                           challenge=str(challenge) if challenge else None)
+            report['dataset']['evaluated_cases'] = cases
+            if mode == 'lexical':
+                retriever = Retriever(store)
+                report['setup'] = {'model_load_ns': 0, 'initial_index_ns': 0}
+            else:
+                from services.retrieval.semantic import SemanticRetriever, SentenceTransformerEncoder
+                from services.retrieval.hybrid import HybridRetriever
+                encoder = encoder if encoder is not None else SentenceTransformerEncoder()
+                if hasattr(encoder, 'load'):
+                    encoder.load()
+                retriever = (SemanticRetriever(store, encoder) if mode == 'semantic' else
+                             HybridRetriever(store, encoder, rrf_k=rrf_k, candidate_depth=candidate_depth))
+                dense = retriever if mode == 'semantic' else retriever.semantic
+                started_index = time.perf_counter_ns()
+                dense.index(cases[0]['tenant_id'])
+                report['setup'] = {'model_load_ns': getattr(encoder, 'load_ns', 0),
+                                   'initial_index_ns': time.perf_counter_ns() - started_index,
+                                   'initial_index_tenant': cases[0]['tenant_id']}
+                report['configuration'].update(algorithm=mode, minimum_score=None,
+                    model_id=getattr(encoder, 'model_id', 'injected-encoder'),
+                    model_revision=getattr(encoder, 'revision', None), device='cpu',
+                    tokenization='Encoder tokenizer; lexical component retains baseline tokens',
+                    field_weights='title + space + body encoded jointly',
+                    embedding_dimension=dense._dimension, normalized_embeddings=True,
+                    max_sequence_length=getattr(getattr(encoder, 'model', None), 'max_seq_length', None),
+                    tie_break='document_id ascending; fusion uses full identity',
+                    cache_state='In-memory two-tenant LRU snapshots; first tenant preindexed; later tenant builds timed')
+                report['environment']['dependencies'] = {
+                    name: importlib.metadata.version(name)
+                    for name in ('sentence-transformers', 'transformers', 'torch')
+                } if isinstance(encoder, SentenceTransformerEncoder) else {'encoder': 'injected'}
             first_results = {}
             started, cpu_started = time.perf_counter_ns(), time.process_time_ns()
             for repeat in range(repeats):
@@ -164,9 +212,13 @@ def evaluate(dataset, repeats):
                         error = f'{type(exc).__name__}: {exc}'
                     elapsed = time.perf_counter_ns() - before
                     report['samples'].append({'repeat': repeat + 1, 'case_id': case['case_id'],
-                                              'latency_ns': elapsed, 'error': error, 'results': results})
+                                              'latency_ns': elapsed, 'error': error, 'results': results,
+                                              'stages': getattr(retriever, 'last_timings', {})})
                     if error:
                         continue
+                    if len({identity(r) for r in results}) != len(results) or len(results) > 5:
+                        report['correctness_failures'].append({'case_id': case['case_id'],
+                            'repeat': repeat + 1, 'reason': 'Duplicate identity or excessive result count'})
                     for result in results:
                         if result['tenant_id'] != case['tenant_id'] or identity(result) not in current:
                             report['correctness_failures'].append(
@@ -199,6 +251,8 @@ def evaluate(dataset, repeats):
         if positive else None,
         'macro_precision_at_returned_count': sum(precision) / len(precision) if precision else None,
         'precision_scored_cases': len(precision),
+        'macro_precision_at_5': sum(m['precision_at_5'] for m in positive) / len(positive) if positive else None,
+        'complete_evidence_case_rate': sum(m['complete_required_evidence'] for m in positive) / len(positive) if positive else None,
         'complete_required_evidence_cases': sum(m['complete_required_evidence'] for m in positive),
         'known_distractor_hits_positive': sum(len(m['known_distractor_hits']) for m in positive),
         'no_evidence_cases': len(no_evidence),
@@ -228,6 +282,10 @@ def evaluate(dataset, repeats):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dataset', type=Path, default=ROOT / 'datasets/synthetic_enterprise')
+    parser.add_argument('--mode', choices=('lexical', 'semantic', 'hybrid'), default='lexical')
+    parser.add_argument('--rrf-k', type=float, default=60)
+    parser.add_argument('--candidate-depth', type=int, default=20)
+    parser.add_argument('--challenge', type=Path)
     parser.add_argument('--repeats', type=int, default=10)
     parser.add_argument('--output', type=Path, help='New JSON file; existing files are never overwritten')
     args = parser.parse_args()
@@ -235,7 +293,8 @@ def main():
         if args.output and (args.output.exists() or args.output.is_symlink()
                             or args.output.resolve().is_relative_to(args.dataset.resolve())):
             raise ValueError('Output must be new and outside the dataset')
-        report = evaluate(args.dataset, args.repeats)
+        report = evaluate(args.dataset, args.repeats, mode=args.mode, rrf_k=args.rrf_k,
+                          candidate_depth=args.candidate_depth, challenge=args.challenge)
         raw = json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False) + '\n'
         if args.output:
             with args.output.open('x', encoding='utf-8') as handle:

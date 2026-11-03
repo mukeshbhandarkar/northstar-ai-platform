@@ -1,0 +1,4 @@
+# Optional experimental encoder only. Baseline and ordinary tests use stdlib.
+# The measured environment uses torch 2.14.1+cpu; provision a CPU wheel explicitly.
+sentence-transformers==6.1.0
+transformers==5.19.0
